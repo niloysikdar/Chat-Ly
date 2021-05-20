@@ -25,7 +25,17 @@ io.on("connection", (socket) => {
     if (error) {
       return callback(error);
     } else {
+      socket.emit("message", {
+        user: "Admin",
+        text: `Hey ${user.name}, Welcome to ${user.room}`,
+      });
+      socket.broadcast.to(user.room).emit("message", {
+        user: "Admin",
+        text: `${user.name} has joined the Room`,
+      });
       socket.join(user.room);
+
+      callback();
     }
   });
 
