@@ -1,5 +1,5 @@
 import { Route, Switch } from "react-router-dom";
-import Join from "./components/Join";
+import Join from "./components/Join/Join";
 import Chat from "./components/Chat";
 
 const App = () => {
