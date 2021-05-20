@@ -18,7 +18,12 @@ const Chat = () => {
 
   const socketEvent = () => {
     socket = io(ENDPOINT);
-    socket.emit("join", { name, room });
+    socket.emit("join", { name, room }, () => {});
+
+    return () => {
+      socket.emit("disconnect");
+      socket.off();
+    };
   };
 
   useEffect(() => {
