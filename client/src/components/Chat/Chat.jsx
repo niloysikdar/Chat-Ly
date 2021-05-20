@@ -16,11 +16,15 @@ const Chat = () => {
     setRoom(data.room);
   };
 
+  const socketEvent = () => {
+    socket = io(ENDPOINT);
+    socket.emit("join", { name, room });
+  };
+
   useEffect(() => {
     getNameRoom();
-    socket = io(ENDPOINT);
-    console.log(socket);
-  }, []);
+    socketEvent();
+  }, [ENDPOINT]);
 
   return (
     <div>
