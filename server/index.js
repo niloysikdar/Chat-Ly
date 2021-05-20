@@ -7,13 +7,17 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
 io.on("connection", (socket) => {
   console.log("We have a new connection :)");
 
   socket.on("disconnect", () => {
-    console.log("User have left :(");
+    console.log("User has left :(");
   });
 });
 

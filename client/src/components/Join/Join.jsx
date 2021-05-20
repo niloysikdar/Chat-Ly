@@ -23,13 +23,13 @@ const Join = () => {
   return (
     <div className="joinOuterContainer">
       <div className="joinInnerContainer">
-        <h1 className="heading">Join Room</h1>
+        <h1 className="heading">Join a Room</h1>
         <div>
           <input
             required
             type="text"
             placeholder="Your Name"
-            className="joinInput"
+            className="joinInput mt-20"
             ref={nameRef}
           />
         </div>
