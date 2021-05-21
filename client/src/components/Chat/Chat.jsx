@@ -3,38 +3,68 @@ import queryString from "query-string";
 import io from "socket.io-client";
 
 let socket;
+const ENDPOINT = "http://localhost:5000/";
 
 const Chat = () => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
-  const ENDPOINT = "http://localhost:5000/";
-
-  const getNameRoom = () => {
-    const nameRoomData = window.location.href.split("?")[1];
-    const data = queryString.parse(nameRoomData);
-    setName(data.name);
-    setRoom(data.room);
-  };
-
-  const socketEvent = () => {
-    socket = io(ENDPOINT);
-    socket.emit("join", { name, room }, () => {});
-
-    return () => {
-      socket.emit("disconnect");
-      socket.off();
-    };
-  };
+  const [messages, updateMessages] = useState([]);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    getNameRoom();
-    socketEvent();
-  }, [ENDPOINT]);
+    const nameRoomData = window.location.href.split("?")[1];
+    const data = queryString.parse(nameRoomData);
+    const newname = data.name;
+    const newRoom = data.room;
+    setName(data.name);
+    setRoom(data.room);
+
+    socket = io(ENDPOINT);
+
+    socket.emit("join", { name: newname, room: newRoom }, (error) => {
+      if (error) {
+        alert(error);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.on("message", (message) => {
+      console.log(message);
+      updateMessages(messages.splice(3, 0, message));
+    });
+  });
+
+  const sendMessage = (event) => {
+    event.preventDefault();
+
+    if (message) {
+      socket.emit("sendMessage", message, () => setMessage(""));
+    }
+  };
+
+  // console.log(messages);
 
   return (
-    <div>
-      <h1>{name}</h1>
-      <h1>{room}</h1>
+    <div className="outerContainer">
+      <div className="container">
+        {messages.map((m) => {
+          return <h1>{m.text}</h1>;
+        })}
+
+        {/* <h2>{name}</h2>
+        <h2>{room}</h2> */}
+        <input
+          type="text"
+          value={message}
+          onChange={(event) => {
+            setMessage(event.target.value);
+          }}
+          onKeyPress={(event) => {
+            event.key === "Enter" && sendMessage(event);
+          }}
+        />
+      </div>
     </div>
   );
 };
