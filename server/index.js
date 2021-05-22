@@ -16,15 +16,18 @@ const io = socketio(server, {
 
 io.on("connection", (socket) => {
   socket.on("join", ({ name, room }, callback) => {
+    console.log(`Name is ${name}, Room is ${room}`);
     const { error, user } = addUser({
       id: socket.id,
-      name,
-      room,
+      name: name,
+      room: room,
     });
 
     if (error) {
       return callback(error);
     } else {
+      socket.join(user.room);
+
       socket.emit("message", {
         user: "Admin",
         text: `Hey ${user.name}, Welcome to ${user.room}`,
@@ -33,7 +36,6 @@ io.on("connection", (socket) => {
         user: "Admin",
         text: `${user.name} has joined the Room`,
       });
-      socket.join(user.room);
 
       callback();
     }
