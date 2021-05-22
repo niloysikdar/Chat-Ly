@@ -26,14 +26,14 @@ const Chat = () => {
         alert(error);
       }
     });
-  }, []);
+  }, [ENDPOINT, window.location.href]);
 
   useEffect(() => {
-    socket.on("message", (message) => {
-      console.log(message);
-      updateMessages(messages.splice(3, 0, message));
+    socket.on("message", (newMessage) => {
+      console.log(newMessage);
+      updateMessages((messages) => [...messages, newMessage]);
     });
-  });
+  }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -49,7 +49,7 @@ const Chat = () => {
     <div className="outerContainer">
       <div className="container">
         {messages.map((m) => {
-          return <h1>{m.text}</h1>;
+          return <h1 key={`${m.text}+${m.user}`}>{m.text}</h1>;
         })}
 
         {/* <h2>{name}</h2>
