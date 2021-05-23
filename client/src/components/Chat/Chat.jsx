@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import queryString from "query-string";
 import io from "socket.io-client";
+import "./Chat.css";
+import ChatHeader from "../ChatHeader/ChatHeader";
 
 let socket;
 const ENDPOINT = "http://localhost:5000/";
@@ -48,13 +50,8 @@ const Chat = () => {
   return (
     <div className="outerContainer">
       <div className="container">
-        {messages.map((m) => {
-          return <h1 key={`${m.text}+${m.user}`}>{m.text}</h1>;
-        })}
-
-        {/* <h2>{name}</h2>
-        <h2>{room}</h2> */}
-        <input
+        <ChatHeader room={room} />
+        {/* <input
           type="text"
           value={message}
           onChange={(event) => {
@@ -63,7 +60,7 @@ const Chat = () => {
           onKeyPress={(event) => {
             event.key === "Enter" && sendMessage(event);
           }}
-        />
+        />  */}
       </div>
     </div>
   );

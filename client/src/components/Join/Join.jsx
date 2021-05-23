@@ -21,21 +21,23 @@ const Join = () => {
   };
 
   return (
-    <div className="wrapper">
-      <div className="title">Chat Ly</div>
-      <form>
-        <div className="field">
-          <input type="text" required ref={nameRef} />
-          <label>Username</label>
-        </div>
-        <div className="field">
-          <input type="text" required ref={roomRef} />
-          <label>Room Name</label>
-        </div>
-        <div className="field">
-          <input type="submit" value="Join" onClick={onJoinClicked} />
-        </div>
-      </form>
+    <div className="main">
+      <div className="wrapper">
+        <div className="title">Chat Ly</div>
+        <form>
+          <div className="field">
+            <input type="text" required ref={nameRef} />
+            <label>Username</label>
+          </div>
+          <div className="field">
+            <input type="text" required ref={roomRef} />
+            <label>Room Name</label>
+          </div>
+          <div className="field">
+            <input type="submit" value="Join" onClick={onJoinClicked} />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
