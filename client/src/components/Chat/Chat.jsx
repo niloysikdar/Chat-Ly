@@ -29,7 +29,7 @@ const Chat = () => {
         alert(error);
       }
     });
-  }, [ENDPOINT, window.location.href]);
+  }, []);
 
   useEffect(() => {
     socket.on("message", (newMessage) => {
@@ -52,19 +52,29 @@ const Chat = () => {
     <div className="outerContainer">
       <div className="container">
         <ChatHeader room={room} />
-        {/* <Messages messages={messages} name={name} /> */}
+        <Messages messages={messages} name={name} />
+        {/* {messages.map((m) => {
+          return <h1 key={m.text}>{m.text}</h1>;
+        })} */}
         <form className="form">
           <input
             className="input"
             type="text"
             placeholder="Type a message..."
             value={message}
-            onChange={({ target: { value } }) => setMessage(value)}
-            onKeyPress={(event) =>
-              event.key === "Enter" ? sendMessage(event) : null
-            }
+            onChange={(event) => {
+              setMessage(event.target.value);
+            }}
+            onKeyPress={(event) => {
+              event.key === "Enter" && sendMessage(event);
+            }}
           />
-          <button className="sendButton" onClick={(e) => sendMessage(e)}>
+          <button
+            className="sendButton"
+            onClick={(event) => {
+              sendMessage(event);
+            }}
+          >
             Send
           </button>
         </form>
