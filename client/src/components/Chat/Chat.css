@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #1a1a1d;
+  background-color: #f2f2f2;
 }
 
 .container {
@@ -12,8 +12,42 @@
   justify-content: space-between;
   background: #ffffff;
   border-radius: 8px;
-  height: 60%;
+  height: 80%;
   width: 35%;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+  display: flex;
+  border-top: 2px solid #d3d3d3;
+  border-radius: 2rem;
+}
+
+.input {
+  border: none;
+  border-radius: 2rem;
+  padding: 0rem 1rem;
+  width: 80%;
+  font-size: 1.2em;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+.sendButton {
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: linear-gradient(-135deg, #c850c0, #4158d0);
+  padding: 20px;
+  display: inline-block;
+  border: none;
+  width: 20%;
+  cursor: pointer;
+  border-radius: 2rem;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {

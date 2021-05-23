@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import queryString from "query-string";
 import io from "socket.io-client";
+import "./Chat.css";
+import ChatHeader from "../ChatHeader/ChatHeader";
+import Messages from "../Messages/Messages";
+import TextContainer from "../TextContainer/TextContainer";
 
 let socket;
 const ENDPOINT = "http://localhost:5000/";
@@ -8,6 +12,7 @@ const ENDPOINT = "http://localhost:5000/";
 const Chat = () => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
+  const [users, setUsers] = useState("");
   const [messages, updateMessages] = useState([]);
   const [message, setMessage] = useState("");
 
@@ -26,12 +31,16 @@ const Chat = () => {
         alert(error);
       }
     });
-  }, [ENDPOINT, window.location.href]);
+  }, []);
 
   useEffect(() => {
     socket.on("message", (newMessage) => {
       console.log(newMessage);
       updateMessages((messages) => [...messages, newMessage]);
+    });
+
+    socket.on("roomData", ({ users }) => {
+      setUsers(users);
     });
   }, []);
 
@@ -48,23 +57,32 @@ const Chat = () => {
   return (
     <div className="outerContainer">
       <div className="container">
-        {messages.map((m) => {
-          return <h1 key={`${m.text}+${m.user}`}>{m.text}</h1>;
-        })}
-
-        {/* <h2>{name}</h2>
-        <h2>{room}</h2> */}
-        <input
-          type="text"
-          value={message}
-          onChange={(event) => {
-            setMessage(event.target.value);
-          }}
-          onKeyPress={(event) => {
-            event.key === "Enter" && sendMessage(event);
-          }}
-        />
+        <ChatHeader room={room} />
+        <Messages messages={messages} name={name} />
+        <form className="form">
+          <input
+            className="input"
+            type="text"
+            placeholder="Type a message..."
+            value={message}
+            onChange={(event) => {
+              setMessage(event.target.value);
+            }}
+            onKeyPress={(event) => {
+              event.key === "Enter" && sendMessage(event);
+            }}
+          />
+          <button
+            className="sendButton"
+            onClick={(event) => {
+              sendMessage(event);
+            }}
+          >
+            Send
+          </button>
+        </form>
       </div>
+      <TextContainer users={users} />
     </div>
   );
 };
