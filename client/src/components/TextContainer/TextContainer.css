@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   margin-left: 100px;
-  color: white;
-  height: 60%;
+  color: #000;
+  height: 80%;
   justify-content: space-between;
 }
 

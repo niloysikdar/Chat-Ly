@@ -2,10 +2,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #2979ff;
+  background: linear-gradient(-135deg, #c850c0, #4158d0);
   border-radius: 4px 4px 0 0;
   height: 60px;
   width: 100%;
+}
+
+.chatHeader h3 {
+  font-size: 30px;
+  font-weight: 600;
 }
 
 .leftInnerContainer {
