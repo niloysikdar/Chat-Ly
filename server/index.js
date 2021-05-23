@@ -37,6 +37,11 @@ io.on("connection", (socket) => {
         text: `${user.name} has joined the Room`,
       });
 
+      io.to(user.room).emit("roomData", {
+        room: user.room,
+        users: getAllUsersInRoom(user.room),
+      });
+
       callback();
     }
   });
@@ -49,11 +54,23 @@ io.on("connection", (socket) => {
       text: message,
     });
 
+    io.to(user.room).emit("roomData", {
+      room: user.room,
+      users: getAllUsersInRoom(user.room),
+    });
+
     callback();
   });
 
   socket.on("disconnect", () => {
     console.log("User has left :(");
+    const user = removeUser(socket.id);
+    if (user) {
+      io.to(user.room).emit("message", {
+        user: "Admin",
+        text: `${user.name} has left the room`,
+      });
+    }
   });
 });
 
