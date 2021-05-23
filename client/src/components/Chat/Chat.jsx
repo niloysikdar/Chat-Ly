@@ -7,7 +7,8 @@ import Messages from "../Messages/Messages";
 import TextContainer from "../TextContainer/TextContainer";
 
 let socket;
-const ENDPOINT = "http://localhost:5000/";
+// const ENDPOINT = "http://localhost:5000/";
+const ENDPOINT = "https://chat-ly.herokuapp.com/";
 
 const Chat = () => {
   const [name, setName] = useState("");
