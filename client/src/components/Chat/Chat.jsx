@@ -3,6 +3,7 @@ import queryString from "query-string";
 import io from "socket.io-client";
 import "./Chat.css";
 import ChatHeader from "../ChatHeader/ChatHeader";
+import Messages from "../Messages/Messages";
 
 let socket;
 const ENDPOINT = "http://localhost:5000/";
@@ -51,6 +52,7 @@ const Chat = () => {
     <div className="outerContainer">
       <div className="container">
         <ChatHeader room={room} />
+        {/* <Messages messages={messages} name={name} /> */}
         <form className="form">
           <input
             className="input"
